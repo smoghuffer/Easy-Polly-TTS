@@ -1,6 +1,6 @@
 import os
 import boto3
-im
+import numpy as np
 
 ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
 AWS_SECRET = os.getenv("AWS_SECRET")
@@ -17,3 +17,20 @@ client = boto3.client(
     aws_secret_access_key=AWS_SECRET,
     region_name=AWS_REGION
 )
+
+def speak(text):
+    response = client.synthesize_speech(VoiceId="Brian",
+                    Text=text,
+                    OutputFormat='pcm',
+                    Engine='standard',
+                    SampleRate='16000')
+    
+    audio_data = response["AudioStream"].read()
+
+    samples = np.frombuffer(audio_data, dtype=np.int16).astype(np.float32) / 32768.0
+
+    sd.play(
+        samples,
+        samplerate=16000,
+        blocking=True
+    )
