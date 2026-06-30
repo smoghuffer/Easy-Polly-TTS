@@ -19,6 +19,12 @@ client = boto3.client(
 )
 
 def speak(text, voice="Brian"):
+    """usage:
+    from Easy-Polly-TTS import speak
+    speak("Hello world")
+    
+    to use another voice:
+    speak("Hello world", voice="voice")"""
     response = client.synthesize_speech(VoiceId=voice,
                     Text=text,
                     OutputFormat='pcm',
