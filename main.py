@@ -18,8 +18,8 @@ client = boto3.client(
     region_name=AWS_REGION
 )
 
-def speak(text):
-    response = client.synthesize_speech(VoiceId="Brian",
+def speak(text, voice="Brian"):
+    response = client.synthesize_speech(VoiceId=voice,
                     Text=text,
                     OutputFormat='pcm',
                     Engine='standard',
@@ -34,3 +34,7 @@ def speak(text):
         samplerate=16000,
         blocking=True
     )
+
+if __name__ == "__main__"
+    speak("Hello world") #test with brian voice
+    speak("Hello world", voice="Kevin") #test with another voice
